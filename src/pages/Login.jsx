@@ -1,11 +1,153 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router";
 
 const Login = () => {
-    return (
-        <div>
-            <h1>Login</h1>
+  return (
+    <div class="">
+      <div class="flex flex-col items-center justify-center py-6 px-4">
+        <div class="max-w-[480px] w-full">
+
+          <div class="p-6 sm:p-8 rounded-2xl bg-white border border-gray-200 shadow-sm">
+            <h1 class="text-slate-900 text-center text-3xl font-semibold">
+              Sign in to your account
+            </h1>
+            <form class="mt-12 space-y-6">
+              <div>
+                <label class="text-slate-900 text-sm font-medium mb-2 block">
+                  User name
+                </label>
+                <div class="relative flex items-center">
+                  <input
+                    name="username"
+                    type="text"
+                    required
+                    class="w-full text-slate-900 text-sm border border-slate-300 px-4 py-3 pr-8 rounded-md outline-blue-600"
+                    placeholder="Enter user name"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#bbb"
+                    stroke="#bbb"
+                    class="w-4 h-4 absolute right-4"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      cx="10"
+                      cy="7"
+                      r="6"
+                      data-original="#000000"
+                    ></circle>
+                    <path
+                      d="M14 15H6a5 5 0 0 0-5 5 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 5 5 0 0 0-5-5zm8-4h-2.59l.3-.29a1 1 0 0 0-1.42-1.42l-2 2a1 1 0 0 0 0 1.42l2 2a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42l-.3-.29H22a1 1 0 0 0 0-2z"
+                      data-original="#000000"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <label class="text-slate-900 text-sm font-medium mb-2 block">
+                  Password
+                </label>
+                <div class="relative flex items-center">
+                  <input
+                    name="password"
+                    type="password"
+                    required
+                    class="w-full text-slate-900 text-sm border border-slate-300 px-4 py-3 pr-8 rounded-md outline-blue-600"
+                    placeholder="Enter password"
+                  />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="#bbb"
+                    stroke="#bbb"
+                    class="w-4 h-4 absolute right-4 cursor-pointer"
+                    viewBox="0 0 128 128"
+                  >
+                    <path
+                      d="M64 104C22.127 104 1.367 67.496.504 65.943a4 4 0 0 1 0-3.887C1.367 60.504 22.127 24 64 24s62.633 36.504 63.496 38.057a4 4 0 0 1 0 3.887C126.633 67.496 105.873 104 64 104zM8.707 63.994C13.465 71.205 32.146 96 64 96c31.955 0 50.553-24.775 55.293-31.994C114.535 56.795 95.854 32 64 32 32.045 32 13.447 56.775 8.707 63.994zM64 88c-13.234 0-24-10.766-24-24s10.766-24 24-24 24 10.766 24 24-10.766 24-24 24zm0-40c-8.822 0-16 7.178-16 16s7.178 16 16 16 16-7.178 16-16-7.178-16-16-16z"
+                      data-original="#000000"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded"
+                  />
+                  <label
+                    for="remember-me"
+                    class="ml-3 block text-sm text-slate-900"
+                  >
+                    Remember me
+                  </label>
+                </div>
+                <div class="text-sm">
+                  <a
+                    href="jajvascript:void(0);"
+                    class="text-blue-600 hover:underline font-semibold"
+                  >
+                    Forgot your password?
+                  </a>
+                </div>
+              </div>
+
+              <div class="!mt-12">
+                <button
+                  type="button"
+                  class="w-full py-2 px-4 text-[15px] font-medium tracking-wide rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
+                >
+                  Sign in
+                </button>
+                <div className="divider divide-amber-700">OR</div>
+            <button className="btn bg-white w-full text-black border-[#e5e5e5]">
+              <svg
+                aria-label="Google logo"
+                width="16"
+                height="16"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <g>
+                  <path d="m0 0H512V512H0" fill="#fff"></path>
+                  <path
+                    fill="#34a853"
+                    d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
+                  ></path>
+                  <path
+                    fill="#4285f4"
+                    d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
+                  ></path>
+                  <path
+                    fill="#fbbc02"
+                    d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
+                  ></path>
+                  <path
+                    fill="#ea4335"
+                    d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
+                  ></path>
+                </g>
+              </svg>
+              Login with Google
+            </button>
+              </div>
+              <p class="text-slate-900 text-sm !mt-6 text-center">
+                Don't have an account?{" "}
+                <Link to={'/register'}
+                  class="text-blue-600 hover:underline ml-1 whitespace-nowrap font-semibold"
+                >
+                  Register here
+                </Link>
+              </p>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Login;

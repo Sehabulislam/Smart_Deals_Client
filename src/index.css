@@ -1,4 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Telex&display=swap');
+
 @import "tailwindcss";
 @plugin "daisyui" {
   themes: light --default, dark --cupcake;
+}
+
+*{
+  font-family: "Telex", sans-serif;
 }
