@@ -4,7 +4,7 @@ import { AuthContext } from "../context/AuthProvider";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { signInUser,signInWithGoogle } = useContext(AuthContext);
+  const { signInUser,signInWithGoogle,setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogin = (event) => {
@@ -14,7 +14,7 @@ const Login = () => {
 
     signInUser(email, password)
       .then((result) => {
-        console.log(result.user);
+        setUser(result.user);
         event.target.reset();
         navigate('/');
       })
@@ -25,7 +25,7 @@ const Login = () => {
   const handleGoogleSignIn = () => {
       signInWithGoogle()
       .then((result)=>{
-        console.log(result.user);
+        setUser(result.user);
         toast.success("User logged in successfully");
         navigate('/');
       }).catch((error)=>{
