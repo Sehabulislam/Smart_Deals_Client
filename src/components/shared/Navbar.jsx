@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
+import { AuthContext } from "../../context/AuthProvider";
 
 const Navbar = () => {
+  const {user,setUser,signOutUser} = useContext(AuthContext);
+  const handleSignOut = () => {
+    signOutUser()
+    .then(()=>{
+      setUser(null);
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
      const links = <>
 
         <NavLink to={'/'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>Home</NavLink>
@@ -48,13 +58,19 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end flex gap-3">
-        
+        {
+          user ? <Link onClick={handleSignOut} className="px-4 py-2 text-md rounded-md cursor-pointer text-white font-bold border bg-linear-to-bl from-violet-500 to-fuchsia-500">
+            Sign Out
+          </Link> :
+          <>
           <Link to={'/login'} className="px-4 py-2 text-md rounded-md font-bold cursor-pointer text-slate-900 border border-gray-400 bg-transparent hover:bg-gray-50 transition-all">
             Login
           </Link>
           <Link to={'/register'} className="px-4 py-2 text-md rounded-md cursor-pointer text-white font-bold border bg-linear-to-bl from-violet-500 to-fuchsia-500">
             Register
           </Link>
+          </>
+          }
       </div>
     </div>
     </div>

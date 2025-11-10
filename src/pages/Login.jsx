@@ -1,9 +1,12 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const { signInUser } = useContext(AuthContext);
+  const { signInUser,signInWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleLogin = (event) => {
     event.preventDefault();
     const email = event.target.email.value;
@@ -13,11 +16,23 @@ const Login = () => {
       .then((result) => {
         console.log(result.user);
         event.target.reset();
+        navigate('/');
       })
       .catch((error) => {
         console.log(error);
       });
   };
+  const handleGoogleSignIn = () => {
+      signInWithGoogle()
+      .then((result)=>{
+        console.log(result.user);
+        toast.success("User logged in successfully");
+        navigate('/');
+      }).catch((error)=>{
+        console.log(error);
+        toast.error(error.message);
+      })
+    }
   return (
     <div className="">
       <div className="flex flex-col items-center justify-center py-6 px-4">
@@ -88,7 +103,7 @@ const Login = () => {
                   Sign in
                 </button>
                 <div className="divider divide-amber-700">OR</div>
-                <button className="btn bg-white w-full text-black border-[#e5e5e5]">
+                <button onClick={handleGoogleSignIn} className="btn bg-white w-full text-black border-[#e5e5e5]">
                   <svg
                     aria-label="Google logo"
                     width="16"

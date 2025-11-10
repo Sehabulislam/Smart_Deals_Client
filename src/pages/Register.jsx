@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../context/AuthProvider";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, signInWithGoogle } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const handleCreateUser = (event) => {
     event.preventDefault();
@@ -12,13 +14,46 @@ const Register = () => {
     const password = event.target.password.value;
 
     createUser(email, password)
-    .then((result)=>{
-      console.log(result.user);
-      event.target.reset();
-    }).catch((error)=>{
-      console.log(error);
-    })
-  }
+      .then((result) => {
+        console.log(result.user);
+        event.target.reset();
+        toast.success("User created successfully");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+  };
+  const handleGoogleSignIn = () => {
+    signInWithGoogle()
+      .then((result) => {
+        console.log(result.user);
+        toast.success("User logged in successfully");
+        navigate("/");
+        const newUser = {
+          name: result.user.displayName,
+          email: result.user.email,
+          image : result.user.photoURL
+        }
+        //create a user in database
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(newUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
+  };
   return (
     <div className="flex flex-col justify-center p-4">
       <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
@@ -36,7 +71,8 @@ const Register = () => {
                 name="name"
                 type="text"
                 className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter name" required
+                placeholder="Enter name"
+                required
               />
             </div>
             <div>
@@ -47,7 +83,8 @@ const Register = () => {
                 name="email"
                 type="email"
                 className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter email" required
+                placeholder="Enter email"
+                required
               />
             </div>
             <div>
@@ -58,7 +95,8 @@ const Register = () => {
                 name="password"
                 type="password"
                 className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter password" required
+                placeholder="Enter password"
+                required
               />
             </div>
 
@@ -92,7 +130,10 @@ const Register = () => {
               Create an account
             </button>
             <div className="divider divide-amber-700">OR</div>
-            <button className="btn bg-white w-full text-black border-[#e5e5e5]">
+            <button
+              onClick={handleGoogleSignIn}
+              className="btn bg-white w-full text-black border-[#e5e5e5]"
+            >
               <svg
                 aria-label="Google logo"
                 width="16"
