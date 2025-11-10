@@ -5,10 +5,10 @@ const Navbar = () => {
      const links = <>
 
         <NavLink to={'/'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>Home</NavLink>
-        <NavLink to={'/aboutUs'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>All Products</NavLink>
-        <NavLink to={'/aboutUs'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>My Products</NavLink>
-        <NavLink to={'/aboutUs'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>My Bids</NavLink>
-        <NavLink to={'/profile'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>Create Product</NavLink>
+        <NavLink to={'/allProducts'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>All Products</NavLink>
+        <NavLink to={'/myProducts'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>My Products</NavLink>
+        <NavLink to={'/myBids'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>My Bids</NavLink>
+        <NavLink to={'/createProduct'} className={({isActive}) => isActive ? 'font-bold text-purple-600 border-b-2 border-blue-900' : 'text-gray-500 font-semibold'}>Create Product</NavLink>
         
     </>
   return (

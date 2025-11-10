@@ -1,65 +1,82 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../context/AuthProvider";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
+
+  const handleCreateUser = (event) => {
+    event.preventDefault();
+    // const name = event.target.name.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+
+    createUser(email, password)
+    .then((result)=>{
+      console.log(result.user);
+      event.target.reset();
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
   return (
-    <div class="flex flex-col justify-center p-4">
-      <div class="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
-        <div class="text-center mb-12">
+    <div className="flex flex-col justify-center p-4">
+      <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
+        <div className="text-center mb-12">
           <h1 className="text-4xl font-bold">Create Your Account</h1>
         </div>
 
-        <form>
-          <div class="space-y-6">
+        <form onSubmit={handleCreateUser}>
+          <div className="space-y-6">
             <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
-                Email Id
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
+                Name
               </label>
               <input
-                name="email"
+                name="name"
                 type="text"
-                class="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter email"
+                className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                placeholder="Enter name" required
               />
             </div>
             <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
+                Email
+              </label>
+              <input
+                name="email"
+                type="email"
+                className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                placeholder="Enter email" required
+              />
+            </div>
+            <div>
+              <label className="text-slate-900 text-sm font-medium mb-2 block">
                 Password
               </label>
               <input
                 name="password"
                 type="password"
-                class="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter password"
-              />
-            </div>
-            <div>
-              <label class="text-slate-900 text-sm font-medium mb-2 block">
-                Confirm Password
-              </label>
-              <input
-                name="cpassword"
-                type="password"
-                class="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
-                placeholder="Enter confirm password"
+                className="text-slate-900 bg-white border border-gray-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                placeholder="Enter password" required
               />
             </div>
 
-            <div class="flex items-center">
+            <div className="flex items-center">
               <input
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
               />
               <label
-                for="remember-me"
-                class="text-slate-600 ml-3 block text-sm"
+                htmlFor="remember-me"
+                className="text-slate-600 ml-3 block text-sm"
               >
                 I accept the{" "}
                 <a
                   href="javascript:void(0);"
-                  class="text-blue-600 font-medium hover:underline ml-1"
+                  className="text-blue-600 font-medium hover:underline ml-1"
                 >
                   Terms and Conditions
                 </a>
@@ -67,10 +84,10 @@ const Register = () => {
             </div>
           </div>
 
-          <div class="mt-12">
+          <div className="mt-12">
             <button
-              type="button"
-              class="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
+              type="submit"
+              className="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none cursor-pointer"
             >
               Create an account
             </button>
@@ -106,11 +123,11 @@ const Register = () => {
               Login with Google
             </button>
           </div>
-          <p class="text-slate-600 text-sm mt-6 text-center">
+          <p className="text-slate-600 text-sm mt-6 text-center">
             Already have an account?{" "}
             <Link
               to={"/login"}
-              class="text-blue-600 font-medium hover:underline ml-1"
+              className="text-blue-600 font-medium hover:underline ml-1"
             >
               Login here
             </Link>
