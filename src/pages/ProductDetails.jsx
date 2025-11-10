@@ -1,27 +1,29 @@
-import { useContext, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useLoaderData } from "react-router";
 import { AuthContext } from "../context/AuthProvider";
 import { toast } from "react-toastify";
+import ProductsBids from "./ProductsBids";
 
 const ProductDetails = () => {
   const singleProduct = useLoaderData();
   const { user } = useContext(AuthContext);
   const bidModalRef = useRef(null);
-  const { title, price_max, _id } = singleProduct;
+  const { title, price_max, _id: productId } = singleProduct;
   const handleBidModal = () => {
     bidModalRef.current.showModal();
   };
+  const [bids, setBids] = useState([]);
   const handleBidProduct = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
     const email = form.email.value;
-    const photo = form.photo.value;
-    const bidsPrice = form.price.value;
+    const photo = user?.photoURL;
+    const bidsPrice = Number(form.price.value);
     const number = form.number.value;
-    // console.log(_id,name, email, photo, bidsPrice, number);
+    console.log(productId,name, email, photo, bidsPrice, number);
     const newBid = {
-      product: _id,
+      product: productId,
       buyer_name: name,
       buyer_email: email,
       buyer_image: photo,
@@ -40,15 +42,28 @@ const ProductDetails = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.insertedId) {
-          event.target.reset();
           toast.success("Your bid has been placed successfully");
-          // console.log(data);
           bidModalRef.current.close();
+          //add the new bid to the state
+          newBid._id = data.insertedId;
+          const newBids = [...bids,newBid];
+          newBids.sort((a,b)=> b.bid_price -a.bid_price)
+          setBids(newBids)
         }
       });
   };
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/products/bids/${productId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("bids for this product", data);
+        setBids(data);
+      });
+  }, [productId]);
   return (
     <div>
+      {/* product details page */}
       <div class="max-w-4xl mx-auto shadow-md py-8 rounded-2xl">
         <div class="px-4 sm:px-6 lg:px-8">
           <div class="flex flex-col md:flex-row -mx-4">
@@ -162,7 +177,7 @@ const ProductDetails = () => {
                         type="text"
                         name="name"
                         class="w-full border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-transparent focus:ring-2 focus:ring-black focus:outline-none"
-                        defaultValue={user.displayName}
+                        defaultValue={user?.displayName}
                         required
                       />
                     </div>
@@ -174,7 +189,7 @@ const ProductDetails = () => {
                         type="email"
                         name="email"
                         class="w-full border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-transparent focus:ring-2 focus:ring-black focus:outline-none"
-                        defaultValue={user.email}
+                        defaultValue={user?.email}
                         required
                       />
                     </div>
@@ -188,7 +203,7 @@ const ProductDetails = () => {
                       type="url"
                       name="photo"
                       class="w-full border border-gray-300 bg-white px-4 py-3 text-gray-900 focus:border-transparent focus:ring-2 focus:ring-black focus:outline-none"
-                      defaultValue={user.photoURL}
+                      defaultValue={user?.photoURL}
                       required
                     />
                   </div>
@@ -236,6 +251,16 @@ const ProductDetails = () => {
             </section>
           </div>
         </dialog>
+      </div>
+      {/* someBids collection */}
+      <div className="max-w-4xl mx-auto my-10">
+        <h2 className="text-3xl font-bold">
+          {" "}
+          Bids For This Products: <span className="bg-gradient-to-r from-violet-500 to-fuchsia-500 bg-clip-text text-transparent">{bids.length}</span>
+        </h2>
+        <div className="my-5">
+          <ProductsBids bids={bids}></ProductsBids>
+        </div>
       </div>
     </div>
   );
