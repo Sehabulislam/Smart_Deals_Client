@@ -27,6 +27,7 @@ const instance = axios.create({
 })
 const useAxiosSecure = () =>{
     const {user} = useAuth();
+    //request interceptor
     instance.interceptors.request.use((config)=>{
         config.headers.authorization = `Bearer ${user.accessToken}`
         return config;
