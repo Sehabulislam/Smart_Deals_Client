@@ -8,11 +8,17 @@ import Products from "../pages/Products";
 import MyProducts from "../pages/MyProducts";
 import MyBids from "../pages/MyBids";
 import AddProduct from "../pages/AddProduct";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
+    hydrateFallbackElement: (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    ),
     children: [
       {
         path: "/",
@@ -32,20 +38,37 @@ export const router = createBrowserRouter([
       },
       {
         path: "/myProducts",
-        element: <MyProducts></MyProducts>,
+        element: (
+          <PrivateRoute>
+            <MyProducts></MyProducts>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/myBids",
-        element: <MyBids></MyBids>,
+        element: (
+          <PrivateRoute>
+            <MyBids></MyBids>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/createProduct",
-        element: <AddProduct></AddProduct>,
+        element: (
+          <PrivateRoute>
+            <AddProduct></AddProduct>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/productDetails/:id",
-        loader : ({params}) => fetch(`http://localhost:5000/products/${params.id}`),
-        element: <ProductsDetails></ProductsDetails>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/products/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <ProductsDetails></ProductsDetails>
+          </PrivateRoute>
+        ),
       },
     ],
   },
